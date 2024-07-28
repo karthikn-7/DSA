@@ -35,8 +35,17 @@ class Queue:
 
     def dequeue(self)->None:
         """Removes the front element from the queue"""
-        self.queue[self.front] = None
-        self.front += 1
+        if self.front == self.rear:
+            raise Exception("Queue is Empty")
+            
+        if self.front != self.max -1:
+            self.queue[self.front] = None
+            self.front += 1
+            return
+        
+        if self.front == self.max -1:
+            self.queue[self.front] = None
+            self.front = 0
 
     def peek(self)->any:
         """Returns the first element of the queue"""
@@ -48,6 +57,20 @@ class Queue:
     def display(self)->None:
         """Traverse through the all elementts and print out."""
         print(self.queue)
+        if self.front == self.rear:
+            print("Queue is Empty")
+            return
+        
+        i = self.front
+        while True:
+            print(self.queue[i],end=" <- ")
+            if i == self.rear:
+                break
+            i = (i+1) % self.max
+
+            
+        
+
 
     
 if __name__ == "__main__":
@@ -61,10 +84,11 @@ if __name__ == "__main__":
 
     cq.dequeue()
 
-    cq.enqueue(50)
-
-    cq.dequeue()
-
-    cq.enqueue(60)
-    print()
+    cq.enqueue(20)
+    
+    
     cq.display()
+    print(cq.front)
+    print(cq.rear)
+
+    print(4%5)
