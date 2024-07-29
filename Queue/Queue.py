@@ -56,17 +56,36 @@ class Queue:
 
     def display(self)->None:
         """Traverse through the all elementts and print out."""
-        print(self.queue)
-        if self.front == self.rear:
+        # print(self.queue)
+        if self.front == -1 and self.rear == -1:
             print("Queue is Empty")
             return
         
         i = self.front
-        while True:
-            print(self.queue[i],end=" <- ")
-            if i == self.rear:
-                break
-            i = (i+1) % self.max
+        print(self.queue)
+        print(" || ")
+        
+
+        if self.front == 0 and self.rear == 0:
+            print(self.queue[i])
+            return
+        elif self.front <= self.rear:
+            for i in range(self.front , self.rear+1):
+                if i != self.rear:
+                    print(self.queue[i],end=" <- ")
+                else:
+                    print(self.queue[i])
+        else:
+            while i != self.rear:
+                print(self.queue[i],end=" <- ")
+                if i == self.max-1:
+                    i = 0
+                    print(self.queue[i],end=" <- ")
+                i += 1
+            print(self.queue[i])
+
+
+        print()
 
             
         
@@ -76,19 +95,26 @@ class Queue:
 if __name__ == "__main__":
     cq = Queue(5)
 
-    cq.enqueue(10)
-    cq.enqueue(20)
-    cq.enqueue(30)
-    cq.enqueue(40)
-    cq.enqueue(40)
+    cq.enqueue("first element")
+    cq.enqueue("second element")
+    cq.enqueue("third element")
+    cq.enqueue("fourth element")
+    cq.enqueue("fifth element")
 
     cq.dequeue()
+    cq.dequeue()
+    cq.dequeue()
+    cq.dequeue()
 
-    cq.enqueue(20)
-    
-    
+    cq.enqueue("new first element")
+    cq.enqueue("new second element")
+    cq.enqueue("new third element")
+    cq.enqueue("new fourth element")
+
+    cq.dequeue()
     cq.display()
+    
     print(cq.front)
     print(cq.rear)
 
-    print(4%5)
+    print(28/78)
