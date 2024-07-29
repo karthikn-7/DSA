@@ -56,14 +56,11 @@ class Queue:
 
     def display(self)->None:
         """Traverse through the all elementts and print out."""
-        # print(self.queue)
         if self.front == -1 and self.rear == -1:
             print("Queue is Empty")
             return
         
         i = self.front
-        print(self.queue)
-        print(" || ")
         
 
         if self.front == 0 and self.rear == 0:
@@ -84,11 +81,21 @@ class Queue:
                 i += 1
             print(self.queue[i])
 
-
-        print()
-
-            
-        
+    def show_front(self) -> any:
+        "Returns the first element of the queue,if the queue is empty return false"
+        if self.front == 0 and self.rear == 0:
+            return self.queue[self.front]
+        if self.front == -1 or self.front == self.rear:
+            return False
+        return self.queue[self.front]
+    
+    def show_last(self) -> any:
+        "Returns the last element of the queue,if the queue is empty return false"
+        if self.front == 0 and self.rear == 0:
+            return self.queue[self.rear]
+        if self.rear == -1 or self.front == self.rear:
+            return False
+        return self.queue[self.rear]
 
 
     
@@ -112,9 +119,8 @@ if __name__ == "__main__":
     cq.enqueue("new fourth element")
 
     cq.dequeue()
-    cq.display()
     
-    print(cq.front)
-    print(cq.rear)
+    cq.enqueue("new fifth element")
 
-    print(28/78)
+
+    print(cq.show_front())
