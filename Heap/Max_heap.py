@@ -5,7 +5,7 @@ class Max_heap:
 
 
     def left_node(self):
-        for i in range(len(self.heap)-1):
+        for i in range(len(self.heap)):
             print(self.heap[2*i])
 
         
