@@ -39,17 +39,44 @@ class Searching_algorithm:
             count += 1
             
         return -1, count
+    
+
+    def exponential_search(self):
+
+        left = 1
+        right = 0
+
+        if self.array[left] == self.element:
+            return left
+        
+        while right < len(self.array):
+            right = left * 2
+            print(right)
+            if right == len(self.array):
+                right -= 1
+                break
+            
+            if self.array[right] == self.element:
+                return right
+            
+            if self.array[right] > self.element:
+                break
+                
+            left+=1
 
             
+        print(left,right)
+
+        
 
 if __name__ == "__main__":
 
     array = [2,4,7,9,11,13,16,21]
 
-    sa = Searching_algorithm(21, array)
+    sa = Searching_algorithm(13, array)
     
     bs = sa.binary_search()
     ls = sa.linear_search()
+    es = sa.exponential_search()
 
-    print(bs)
-    print(ls)
+    print(es)
