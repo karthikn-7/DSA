@@ -5,17 +5,39 @@ class Max_heap:
 
 
     def left_node(self):
+        "Prints all the left node"
         for i in range(len(self.heap)):
-            print(self.heap[2*i])
-
+            ln = (2 * i) + 1
+            if ln > len(self.heap)-1:
+                break
+            print(self.heap[ln])
+    
+    def right_node(self):
+        "Prints all the right node."
+        for i in range(len(self.heap)):
+            ln = (2 * i) + 2
+            if ln > len(self.heap)-1:
+                break
+            print(self.heap[ln])
         
+    def parent_node(self, child):
+        "Returns the parent node for the given child,else return -1"
+        if type(child) is str or type(child) is bool or type(child) is float:
+            return -1
+
+        if child > len(self.heap):
+            return -1
+        
+        return (child - 1) // 2
 
     def display(self):
         print(self.heap)
 
 
 if __name__ == "__main__":
-    array = [40, 50 , 60, 80, 90, 20, 21]
+    array = [20, 21, 12, 31, 42, 50, 11]
 
     mh = Max_heap(array)
-    mh.left_node()
+    print(mh.parent_node(1.2))
+
+    
