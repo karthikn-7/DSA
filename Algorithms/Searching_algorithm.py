@@ -42,41 +42,57 @@ class Searching_algorithm:
     
 
     def exponential_search(self):
+        """Exponential search its very efficient 
+        for large number of elements present in the array"""
+        count = 0
+        if not self.array:
+            return (-1,count)
 
-        left = 1
-        right = 0
-
-        if self.array[left] == self.element:
-            return left
+        if self.element < self.array[0]:
+            return (-1 , count)
         
-        while right < len(self.array):
-            right = left * 2
-            print(right)
-            if right == len(self.array):
-                right -= 1
-                break
-            
-            if self.array[right] == self.element:
-                return right
-            
-            if self.array[right] > self.element:
-                break
-                
-            left+=1
-
-            
-        print(left,right)
-
+        if self.array[0] == self.element:
+            return (0, count)
         
+        bound = 1
+        
+        while bound < len(self.array) and self.array[bound] < self.element:
+            bound *= 2
+            count += 1
+        print(bound,len(self.array))
+
+        right = min( bound, len(self.array)-1 )
+        if self.array[right] == self.element:
+            return (right,count)
+        
+        left = bound// 2
+        return self.__bs_exponential(self.element,left,right,count)
+        
+
+    def __bs_exponential(self,target,left,right,count):
+        "Exponential search utility method"
+        
+        while left <= right:
+            mid = (left + right) // 2
+            if self.array[mid] == target:
+                return (mid,count)
+            if self.array[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+            count += 1
+        return -1
+
 
 if __name__ == "__main__":
 
-    array = [2,4,7,9,11,13,16,21]
+    array = [2,4,7,9,11,13,16,21,23,25,27,33,66,78,89,98,99,111,123,134,145,156,157,158,177,198,275,344,345]
 
-    sa = Searching_algorithm(13, array)
+    sa = Searching_algorithm(123, array)
     
     bs = sa.binary_search()
     ls = sa.linear_search()
     es = sa.exponential_search()
 
-    print(es)
+    print("Exponential Search:",es)
+    print("Binary Search:",bs)
