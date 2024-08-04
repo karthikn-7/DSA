@@ -12,7 +12,21 @@ class Utility:
             start += 1
             return self.recursive(start,table,times)
 
+        def iter_fact(self,num):
+            total = 1
+            for i in range(1,num+1):
+                total = total * i
+            return total
+
+        def recur_fact(self,n):
+
+            if n == 1:
+                return 1
+            return n * self.recur_fact(n - 1)
+
+
 
 if __name__ == "__main__":
-    tables = Utility()
-    tables.recursive(1,3,20)
+
+    rec = Utility()
+    print(rec.recur_fact(5))
