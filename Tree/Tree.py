@@ -31,17 +31,30 @@ class Tree:
                 return nodefound
         
         return None
-        
     
+    def display(self):
+
+        if not self.root.children:
+            print(self.root.data)
+            return
+        
+        print(self.root.data,end=" ")
+        for child in self.root.children:
+            print(child.data,end=" ")
+            if child.children:
+                for child in child.children:
+                    print("|")
+                    print(child.data)
+
 
 if __name__ == "__main__":
-        
+
     Tr = Tree()
     Tr.add(10)
     Tr.add(20,10)
     Tr.add(30,10)
     Tr.add(40,10)
     Tr.add(50,40)
+    
 
-    for data in Tr.root.children:
-        print(data.data)
+    Tr.display()
