@@ -23,10 +23,25 @@ class Utility:
             if n == 1:
                 return 1
             return n * self.recur_fact(n - 1)
+        
+        def printFromN(self,n):
+            """Prints from 1 to the n numbers"""
+            if n == 1:
+                print(n)
+                return 1
+            print(n)
+            return n - self.printFromN(n - 1)
+        
+        def printFromOne(self,n):
+            if n > 0:
+                self.printFromOne(n - 1)
+                print(n)
 
+                
 
 
 if __name__ == "__main__":
 
     rec = Utility()
-    print(rec.recur_fact(5))
+    
+    rec.printFromN(10)
