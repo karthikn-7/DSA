@@ -31,20 +31,48 @@ class Tree:
                 return nodefound
         
         return None
-    
-    def display(self):
 
-        if not self.root.children:
-            print(self.root.data)
+    def display(self,depth=0,node = None):
+
+        if not node:
+            node = self.root
+        
+        if not node:
+            print("Node is empty")
+            return
+
+        print(" "*depth, node.data)
+        for child in node.children:
+            self.display(depth=depth+1,node=child)
+
+    def remove(self,data):
+        if not self.root:
+            print("Root is empty")
+            return
+
+        if data == self.root.data:
+            self.root = None
             return
         
-        print(self.root.data,end=" ")
-        for child in self.root.children:
-            print(child.data,end=" ")
-            if child.children:
-                for child in child.children:
-                    print("|")
-                    print(child.data)
+        parentNode = self.find_parent(data,self.root)
+        if parentNode:
+            for child in parentNode.children:
+                if child.data == data:
+                    parentNode.children.remove(child)
+                    return
+        print("node not found")
+
+
+    
+    def find_parent(self,data,node):
+        for child in node.children:
+            if child.data == data:
+                return node
+            nodefound = self.find_parent(data,child)
+            if nodefound:
+                return nodefound
+        
+        return None
 
 
 if __name__ == "__main__":
@@ -55,6 +83,13 @@ if __name__ == "__main__":
     Tr.add(30,10)
     Tr.add(40,10)
     Tr.add(50,40)
+    Tr.add(12,40)
+    Tr.add(99,50)
+    Tr.add(23,50)
+    Tr.add(42,50)
     
 
+    Tr.display()
+    print("\n\n")
+    Tr.remove(50)
     Tr.display()
