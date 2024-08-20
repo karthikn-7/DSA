@@ -37,11 +37,30 @@ class Utility:
                 self.printFromOne(n - 1)
                 print(n)
 
+        def factorial(self,n):
+            if n == 1:
+                return 1
+            else:
+                return n * self.factorial(n - 1)
                 
+        def is_palindrome_num(self,num):
+
+            num = str(num)
+            front = 0
+            last = len(num) - 1
+
+            while front <= last:
+                if num[front] != num[last]:
+                    return False
+                front += 1
+                last -= 1
+            
+            return True
+
+        
 
 
 if __name__ == "__main__":
 
     rec = Utility()
-    
-    rec.printFromN(10)
+    print(rec.is_palindrome_num(10023001))
