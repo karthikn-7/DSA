@@ -1,4 +1,4 @@
- 
+import random
 class SortingAlgorithms:
 
     def counting_sort(self, array):
@@ -36,18 +36,30 @@ class SortingAlgorithms:
 
         return array
 
+    def quick_sort(self,array):
+        if len(array) <= 1:
+            return array
+
+        pivot = random.choice(array)
+
+        left = [i for i in array if i < pivot]
+        right = [i for i in array if i > pivot]
+        middle = [i for i in array if i == pivot]
+        return self.quick_sort(left) + middle + self.quick_sort(right)
+
 sa = SortingAlgorithms()
 
 
 array = [2,1,1,0,2,5,4,0,2,8,7,7,9,2,0,1,9]
 gfg_array = [2,5,3,0,2,3,0,3]
+codeMealArray = [3,2,5,7,1,6]
 
 
-sa.bubble_sort(gfg_array)
 
 result = {
     "counting_sort":sa.counting_sort(array),
-    "bubble_sort":sa.bubble_sort(array)
+    "bubble_sort":sa.bubble_sort(array),
+    "quick_sort":sa.quick_sort(codeMealArray)
     }
 
 print(result)
