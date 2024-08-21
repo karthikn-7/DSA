@@ -33,22 +33,34 @@ class Bst:
             else:
                 self.recursiveAdd(data,node.right)
 
+    def display(self):
+        result = []
+        self.inorderTraversal(self.root,result)
+        print(result)
 
-        
-
-bst = Bst()
-
-bst.add(45)
-bst.add(20)
-bst.add(10)
-bst.add(5)
-bst.add(6)
-bst.add(19)
-bst.add(21)
-bst.add(51)
+    def inorderTraversal(self,node,result):
+        if not node:
+            return None
+        else:
+            self.inorderTraversal(node.left,result)
+            result.append(node.data)
+            self.inorderTraversal(node.right,result)
 
 
-print(bst.root.left.left.left.right.data)
-print(bst.root.left.left.right.data)
-print(bst.root.left.right.data)
-print(bst.root.right.data)
+
+if __name__ == "__main__":
+
+
+    bst = Bst()
+
+    bst.add(45)
+    bst.add(20)
+    bst.add(10)
+    bst.add(5)
+    bst.add(6)
+    bst.add(19)
+    bst.add(21)
+    bst.add(51)
+
+
+    bst.display()
