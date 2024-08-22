@@ -33,10 +33,21 @@ class Bst:
             else:
                 self.recursiveAdd(data,node.right)
 
-    def display(self):
+    def inorderDisplay(self):
         result = []
         self.inorderTraversal(self.root,result)
         print(result)
+    
+    def preOrderDisplay(self):
+        result = []
+        self.preOrderTraversal(self.root,result)
+        print(result)
+
+    def postOrderDisplay(self):
+        result = []
+        self.postOrderTraversal(self.root,result)
+        print(result)
+
 
     def inorderTraversal(self,node,result):
         if not node:
@@ -46,7 +57,21 @@ class Bst:
             result.append(node.data)
             self.inorderTraversal(node.right,result)
 
+    def preOrderTraversal(self,node,result):
+        if not node:
+            return None
+        else:
+            result.append(node.data)
+            self.inorderTraversal(node.left,result)
+            self.inorderTraversal(node.right,result)
 
+    def postOrderTraversal(self,node,result):
+        if not node:
+            return None
+        else:
+            self.inorderTraversal(node.left,result)
+            self.inorderTraversal(node.right,result)
+            result.append(node.data)
 
 if __name__ == "__main__":
 
@@ -63,4 +88,6 @@ if __name__ == "__main__":
     bst.add(51)
 
 
-    bst.display()
+    bst.inorderDisplay()
+    bst.preOrderDisplay()
+    bst.postOrderDisplay()
