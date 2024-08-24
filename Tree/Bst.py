@@ -73,21 +73,74 @@ class Bst:
             self.inorderTraversal(node.right,result)
             result.append(node.data)
 
+    def remove(self,data):
+        if not self.root:
+            print("Tree is empty!")
+            return
+
+        if self.root.data == data:
+            self.root = None
+            return
+
+        self.recursiveRemove(self.root,data)
+
+    def recursiveRemove(self,node,data):
+
+        if node.left and node.left.data == data:
+            node.left = None
+            return
+
+        if node.right and node.right.data == data:
+            node.right = None
+            return
+
+        if data < node.data:
+            self.recursiveRemove(node.left,data)
+        else:
+            self.recursiveRemove(node.right,data)
+
+    def search(self,data):
+        if not self.root:
+            print("Tree is empty!")
+            return
+        if self.root.data == data:
+            return True
+
+        if self.recursiveSearch(self.root,data):
+            return True
+        return False
+
+
+    def recursiveSearch(self,node,data):
+        if node.left and node.left.data == data:
+            return True
+
+        if node.right and node.right.data == data:
+            return True
+
+        if data < node.data:
+            return self.recursiveSearch(node.left,data)
+        else:
+            return self.recursiveSearch(node.right,data)
+
+
+
 if __name__ == "__main__":
 
 
     bst = Bst()
 
-    bst.add(45)
-    bst.add(20)
+    bst.add(40)
     bst.add(10)
-    bst.add(5)
-    bst.add(6)
-    bst.add(19)
-    bst.add(21)
-    bst.add(51)
+    bst.add(50)
+    bst.add(9)
+    bst.add(15)
+    bst.add(45)
+    bst.add(60)
 
 
     bst.inorderDisplay()
     bst.preOrderDisplay()
     bst.postOrderDisplay()
+
+    print(bst.search(1))
