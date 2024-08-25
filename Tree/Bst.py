@@ -34,44 +34,15 @@ class Bst:
                 self.recursiveAdd(data,node.right)
 
     def inorderDisplay(self):
-        result = []
-        self.inorderTraversal(self.root,result)
-        print(result)
+        if self.root:
+            self._inorder(self.root)
+
     
-    def preOrderDisplay(self):
-        result = []
-        self.preOrderTraversal(self.root,result)
-        print(result)
-
-    def postOrderDisplay(self):
-        result = []
-        self.postOrderTraversal(self.root,result)
-        print(result)
-
-
-    def inorderTraversal(self,node,result):
-        if not node:
-            return None
-        else:
-            self.inorderTraversal(node.left,result)
-            result.append(node.data)
-            self.inorderTraversal(node.right,result)
-
-    def preOrderTraversal(self,node,result):
-        if not node:
-            return None
-        else:
-            result.append(node.data)
-            self.inorderTraversal(node.left,result)
-            self.inorderTraversal(node.right,result)
-
-    def postOrderTraversal(self,node,result):
-        if not node:
-            return None
-        else:
-            self.inorderTraversal(node.left,result)
-            self.inorderTraversal(node.right,result)
-            result.append(node.data)
+    def _inorder(self,node):
+        if node:
+            self._inorder(node.left)
+            print(node.data,end=" ")
+            self._inorder(node.right)
 
     def remove(self,data):
         if not self.root:
@@ -123,6 +94,84 @@ class Bst:
         else:
             return self.recursiveSearch(node.right,data)
 
+    def delete(self,data):
+        if not self.root:
+            print("Tree is empty!")
+            return
+
+        self._deleteRecursive(self.root,data)
+        
+
+
+    def _deleteRecursive(self,node,data):
+
+        if node and data < node.data:
+            if node.left.data == data and not node.left.left and not node.left.right:
+                node.left = None
+                return
+            self._deleteRecursive(node.left,data)
+        if node and data > node.data:
+            if node.right.data == data and not node.right.left and not node.right.right:
+                node.right = None
+                return
+            self._deleteRecursive(node.right,data)
+
+        if node.data == data:
+            if node.left and not node.right:
+                node.data = node.left.data
+                node.left = None
+                return
+            elif node.right and not node.left:
+                node.data = node.right.data
+                node.right = None
+                return
+            
+            elif node.data < self.root.data:
+                lastMax = self.maxValueNode(node)
+                node.data = lastMax
+                self._maxValueNodeRemRecur(node)
+                return
+                
+
+            
+    def minValueNode(self):
+        if not self.root:
+            return None
+        cur = self.root
+        while cur.left is not None:
+            cur = cur.left
+        return cur.data
+    
+    def maxValueNode(self,node = None):
+        if not node:
+            print("Node is empty!")
+            return
+        cur = node
+        while cur.right is not None:
+            cur = cur.right
+
+        if cur.left:
+            return self.maxValueNode(cur.left)
+        else:
+            return cur.data
+        
+    def _maxValueNodeRemRecur(self,node=None):
+        if not node:
+            print("Node is empty!")
+            return
+        cur = node
+        while cur.right.right is not None:
+            cur = cur.right
+
+
+        if cur.right.left:
+            return self.maxValueNode(cur.right.left)
+        else:
+            cur.right = None
+            return
+
+
+
 
 
 if __name__ == "__main__":
@@ -137,10 +186,20 @@ if __name__ == "__main__":
     bst.add(15)
     bst.add(45)
     bst.add(60)
-
+    bst.add(4)
+    bst.add(9.5)
+    bst.add(55)
+    bst.add(56)
+    bst.add(12)
+    bst.add(25)
+    bst.add(30)
+    bst.add(13)
 
     bst.inorderDisplay()
-    bst.preOrderDisplay()
-    bst.postOrderDisplay()
 
-    print(bst.search(1))
+    print()
+    bst.delete(10)
+
+    bst.inorderDisplay()
+
+    print()
