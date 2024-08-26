@@ -127,11 +127,10 @@ class Bst:
                 return
             
             elif node.data < self.root.data:
-                lastMax = self.maxValueNode(node)
+                lastMax = self.inorderPredecessor(node)
                 node.data = lastMax
-                self._maxValueNodeRemRecur(node)
+                self.removeInorderPreNode(node)
                 return
-                
 
             
     def minValueNode(self):
@@ -142,34 +141,33 @@ class Bst:
             cur = cur.left
         return cur.data
     
-    def maxValueNode(self,node = None):
-        if not node:
-            print("Node is empty!")
-            return
+    def inorderPredecessor(self,node=None):
         cur = node
         while cur.right is not None:
             cur = cur.right
 
-        if cur.left:
-            return self.maxValueNode(cur.left)
-        else:
+        if node:
             return cur.data
-        
-    def _maxValueNodeRemRecur(self,node=None):
-        if not node:
-            print("Node is empty!")
-            return
+
+
+    def removeInorderPreNode(self,node):
         cur = node
         while cur.right.right is not None:
             cur = cur.right
 
+        cur.right = None
 
-        if cur.right.left:
-            return self.maxValueNode(cur.right.left)
-        else:
-            cur.right = None
-            return
-
+    def inorderSuccessor(self,node=None):
+        
+        cur = node
+        while cur.right is not None:
+            cur = cur.right
+            if cur.left:
+                return self.inorderSuccessor(cur.left)
+            
+        if cur.left:
+            return self.inorderSuccessor(cur.left)
+        return cur.data
 
 
 
@@ -190,16 +188,15 @@ if __name__ == "__main__":
     bst.add(9.5)
     bst.add(55)
     bst.add(56)
-    bst.add(12)
-    bst.add(25)
+    bst.add(15)
+    bst.add(11)
+    bst.add(14)
+    bst.add(16)
     bst.add(30)
-    bst.add(13)
+    bst.add(25)
 
     bst.inorderDisplay()
-
     print()
-    bst.delete(10)
-
+    print(bst.inorderSuccessor(bst.root.left.right))
     bst.inorderDisplay()
-
     print()
