@@ -45,20 +45,44 @@ class ExpenseTrackerApp:
         self.desc_entry = tk.Entry(root)
         self.desc_entry.pack()
 
-        self.add_button = tk.Button(root,text="Add Expense",command=self.add_expense())
+        self.add_button = tk.Button(root,text="Add Expense",command=self.add_expense)
         self.add_button.pack()
 
-        self.total_button = tk.Button(root,text="Show Total",command=self.calculate_total())
+        self.total_button = tk.Button(root,text="Show Total",command=self.show_total)
         self.total_button.pack()
+
+        self.show_expense_button = tk.Button(root,text="Show Expenses",command=self.show_expenses)
+        self.show_expense_button.pack()
+
+
+        self.expense_listbox_frame = tk.Frame(root)
+        self.expense_listbox_frame.pack()
+
+        self.expense_listbox = tk.Listbox(self.expense_listbox_frame, width=50, height=10)
+        self.expense_listbox.pack(side=tk.LEFT, fill=tk.BOTH)
+
+        self.scrollbar = tk.Scrollbar(self.expense_listbox_frame, orient="vertical")
+        self.scrollbar.pack(side=tk.BOTTOM, fill=tk.Y)
+
+        self.expense_listbox.config(yscrollcommand=self.scrollbar.set)
+        self.scrollbar.config(command=self.expense_listbox.yview)
     
 
     def add_expense(self):
-        amount = float(self.amount_entry.get())
+        try:
+            amount = float(self.amount_entry.get())
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter a valid amount.")
+            return
         category = self.category_entry.get()
         date = self.date_entry.get()
         description = self.desc_entry.get()
 
-        expense = Expense(amount,category,date,description)
+        if not category or not date or not description:
+            messagebox.showerror("Missing Information", "Please fill in all fields.")
+            return
+
+        expense = Expense(float(amount),category,date,description)
         self.tracker.add_expense(expense)
 
         messagebox.showinfo("Info","Expense Added")
@@ -67,6 +91,12 @@ class ExpenseTrackerApp:
     def show_total(self):
         total = self.tracker.calculate_total()
         messagebox.showinfo("Total",f"Total Expense:{total}")
+    
+    def show_expenses(self):
+        self.expense_listbox.delete(0,tk.END)
+        for expense in self.tracker.expenses:
+            display_text = f"Amount: {expense.amount}, Category: {expense.category}, Date: {expense.date}, Description: {expense.description}"
+            self.expense_listbox.insert(tk.END,display_text)
     
     def clear_entries(self):
         self.amount_entry.delete(0,tk.END)
